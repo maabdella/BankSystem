@@ -1,4 +1,5 @@
 ﻿using BankSystem.Models;
+using Microsoft.VisualBasic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BankSystem
@@ -46,116 +47,235 @@ namespace BankSystem
               type (Individual / Business). Validate inputs*/
 
             #region ADD new Cusomer
-            string name;
-            while (true)
-            {
-                Console.Write("Full Name : ");
-                name = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(name))
-                {
-                    Console.WriteLine("Enter Valid Name");
-                }
-                break;
-            }
+            //string name;
+            //while (true)
+            //{
+            //    Console.Write("Full Name : ");
+            //    name = Console.ReadLine();
+            //    if (string.IsNullOrWhiteSpace(name))
+            //    {
+            //        Console.WriteLine("Enter Valid Name");
+            //    }
+            //    break;
+            //}
 
-            string nationalId;
-            while (true)
-            {
-                Console.Write("NationalID : ");
-                nationalId = Console.ReadLine();
-                if(!string.IsNullOrWhiteSpace(nationalId) && nationalId.Length == 14)
-                    break;
-                Console.WriteLine( "National Id Must be 14");
-            }
-            string email;
-            while (true)
-            {
-                Console.Write("Email : ");
-                email = Console.ReadLine();
-                if (!string.IsNullOrWhiteSpace(email) && email.Contains("@"))
-                    break;
-                Console.WriteLine("Enter Valid Email");
-            }
+            //string nationalId;
+            //while (true)
+            //{
+            //    Console.Write("NationalID : ");
+            //    nationalId = Console.ReadLine();
+            //    if(!string.IsNullOrWhiteSpace(nationalId) && nationalId.Length == 14)
+            //        break;
+            //    Console.WriteLine( "National Id Must be 14");
+            //}
+            //string email;
+            //while (true)
+            //{
+            //    Console.Write("Email : ");
+            //    email = Console.ReadLine();
+            //    if (!string.IsNullOrWhiteSpace(email) && email.Contains("@"))
+            //        break;
+            //    Console.WriteLine("Enter Valid Email");
+            //}
 
-            DateTime dob;
-            while (true)
-            {
-                try
-                {
-                    Console.Write("Date of Birth (yyyy-MM-dd) : ");
-                    dob = DateTime.Parse(Console.ReadLine());
-                    break;
-                }
-                catch
-                {
-                    Console.WriteLine("Invalid date format. Use yyyy-MM-dd.");
-                }
-            }
+            //DateTime dob;
+            //while (true)
+            //{
+            //    try
+            //    {
+            //        Console.Write("Date of Birth (yyyy-MM-dd) : ");
+            //        dob = DateTime.Parse(Console.ReadLine());
+            //        break;
+            //    }
+            //    catch
+            //    {
+            //        Console.WriteLine("Invalid date format. Use yyyy-MM-dd.");
+            //    }
+            //}
 
-            string phone;
-            while (true)
-            {
-                Console.Write("Phone Number : ");
-                phone = Console.ReadLine();
+            //string phone;
+            //while (true)
+            //{
+            //    Console.Write("Phone Number : ");
+            //    phone = Console.ReadLine();
 
-                if (!string.IsNullOrWhiteSpace(phone) && phone.Length >= 10)
-                    break;
+            //    if (!string.IsNullOrWhiteSpace(phone) && phone.Length >= 10)
+            //        break;
 
-                Console.WriteLine("Phone number must be at least 10 digits.");
-            }
+            //    Console.WriteLine("Phone number must be at least 10 digits.");
+            //}
 
           
-            string address;
+            //string address;
+            //while (true)
+            //{
+            //    Console.Write("Address : ");
+            //    address = Console.ReadLine();
+
+            //    if (!string.IsNullOrWhiteSpace(address))
+            //        break;
+
+            //    Console.WriteLine("Address is required.");
+            //}
+
+            //int custype;
+            //while (true) 
+            //{
+            //    Console.WriteLine("Customer Type : ");
+            //    Console.WriteLine("  1) Individual");
+            //    Console.WriteLine("  2) Business ");
+            //    Console.Write("    Choice : ");
+
+            //    if (int.TryParse(Console.ReadLine(), out int t) && t == 1 || t == 2)
+            //    {
+            //        custype = t;
+            //        break;
+            //    }
+            //    else 
+            //    {
+            //        Console.WriteLine("Enter 1 Or 2 "); 
+            //    }
+            //}
+
+            //var customer = new Customer
+            //{
+            //    FullName = name,
+            //    Email = email,
+            //    Address = address,
+            //    CustomerType = (CustomerType)custype,
+            //    PhoneNumber = phone,
+            //    NationalId = nationalId,
+            //    DateOfBirth = dob
+            //};
+
+
+            //db.Customers.Add( customer );
+            //db.SaveChanges();   
+
+
+            //Console.WriteLine($"Customer Created Succesfully CustomerID #{customer.Id}");
+            #endregion
+
+            /*
+         
+                Prompt for account number, account type, 
+                branch code, the customer Id, and ownership 
+                role (Primary / CoHolder). Must verify branch 
+                and customer exist before creating the 
+                Account  
+             
+             */
+            #region open new Account 
+            
+            string accNumber;
             while (true)
             {
-                Console.Write("Address : ");
-                address = Console.ReadLine();
-
-                if (!string.IsNullOrWhiteSpace(address))
+                Console.Write("Account Number : ");
+                accNumber = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(accNumber) && accNumber.Length == 16)
                     break;
-
-                Console.WriteLine("Address is required.");
+                Console.WriteLine("Account Number Must be 16");
             }
 
-            int type;
-            while (true) 
+
+            int accType; 
+            while (true)
             {
-                Console.WriteLine("Customer Type : ");
-                Console.WriteLine("  1) Individual");
+                Console.WriteLine("Account Type : ");
+                Console.WriteLine("  1) Savings");
+                Console.WriteLine("  2) Current ");
                 Console.WriteLine("  2) Business ");
                 Console.Write("    Choice : ");
 
-                if (int.TryParse(Console.ReadLine(), out int t) && t == 1 || t == 2)
+                if (int.TryParse(Console.ReadLine(), out int t) && t == 1 || t == 2 || t == 3)
                 {
-                    type = t;
+                    accType = t;
                     break;
                 }
-                else 
+                else
                 {
-                    Console.WriteLine("Enter 1 Or 2 "); 
+                    Console.WriteLine("Enter 1 Or 2 Or 3");
                 }
             }
 
-            var customer = new Customer
+            int branchCode;
+            while (true) 
             {
-                FullName = name,
-                Email = email,
-                Address = address,
-                CustomerType = (CustomerType)type,
-                PhoneNumber = phone,
-                NationalId = nationalId,
-                DateOfBirth = dob
+
+                Console.Write("Branch Code : ");
+                if (int.TryParse(Console.ReadLine(), out int code))
+                {
+                    if (db.Branches.Any(b => b.Code == code))
+                    {
+                        branchCode = code;
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Enter a Valid Branch Code ");
+                    }
+                }
+            }
+
+            int cusId;
+            while (true)
+            {
+                Console.Write("Customer ID : ");
+                if (int.TryParse(Console.ReadLine(), out int id))
+                {
+                    if (db.Customers.Any(c => c.Id == id))
+                    {
+                        cusId = id;
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Enter a Valid Customer ID ");
+                    }
+                }
+            }
+
+
+            int Orole;
+            while (true)
+            {
+                Console.WriteLine("OwnerShip Role : ");
+                Console.WriteLine("  1) Primary");
+                Console.WriteLine("  2) Coholder ");
+                Console.WriteLine("  2) Business ");
+                Console.Write("    Choice : ");
+
+                if (int.TryParse(Console.ReadLine(), out int role) && role == 1 || role == 2 )
+                {
+                    Orole=role;
+                    break; 
+                }
+                else { Console.WriteLine("Enter a Valid Role ..  "); }
+            }
+
+
+            var newAccount = new Account()
+            {
+                AccountNumber = accNumber,
+                AccountType = (AccountType)accType,
+                Branch = new Branch() { Code = branchCode },
+                CustomerAccounts = new List<CustomerAccount>() { new CustomerAccount() { CustomerId = cusId, OwnershipType = (OwnershipRole)Orole } }
+
             };
 
 
-            db.Customers.Add( customer );
-            db.SaveChanges();   
+
+            Console.WriteLine($"Validating BranchCode #{branchCode} and CustomerId #{cusId}");
+
+            Console.WriteLine($"Account #{accNumber} Created and linked to Customer #{cusId} as {Orole} Owner");
 
 
-            Console.WriteLine($"Customer Created Succesfully CustomerID #{customer.Id}");
+
+
+            db.Accounts.Add(newAccount);
+            db.SaveChanges();
+
             #endregion
-
-
 
 
 
