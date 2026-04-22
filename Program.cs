@@ -1,5 +1,6 @@
 ﻿using BankSystem.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client.RP;
 using Microsoft.VisualBasic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -338,47 +339,78 @@ namespace BankSystem
 
 
             #region Remove an Account from a Customer
-            string accNumber;
-            while (true)
-            {
-                Console.Write("Account Number : ");
-                accNumber = Console.ReadLine();
-                if (!string.IsNullOrWhiteSpace(accNumber) && accNumber.Length == 16)
-                    break;
-                Console.WriteLine("Account Number Must be 16");
-            }
+            //string accNumber;
+            //while (true)
+            //{
+            //    Console.Write("Account Number : ");
+            //    accNumber = Console.ReadLine();
+            //    if (!string.IsNullOrWhiteSpace(accNumber) && accNumber.Length == 16)
+            //        break;
+            //    Console.WriteLine("Account Number Must be 16");
+            //}
 
-            int cusId;
-            while (true)
+            //int cusId;
+            //while (true)
+            //{
+            //    Console.Write("Customer ID : ");
+            //    if (int.TryParse(Console.ReadLine(), out int id))
+            //    {
+            //        if (db.Customers.Any(c => c.Id == id))
+            //        {
+            //            cusId = id;
+            //            break;
+            //        }
+            //        else
+            //        {
+            //            Console.WriteLine("Enter a Valid Customer ID ");
+            //        }
+            //    }
+            //}
+
+
+            //var verfication = db.CustomerAccounts.Include(cs => cs.Account)
+            //                                                  .Where(cs => cs.CustomerId == cusId && cs.Account.AccountNumber == accNumber)
+            //                                                  .FirstOrDefault();
+
+            //if (verfication != null)
+            //{
+            //    db.CustomerAccounts.Remove(verfication);
+            //    db.SaveChanges();
+            //    Console.WriteLine("Ownership link deleted");
+            //    Console.WriteLine($"That was the last owner - Account {accNumber} was also removed");
+            //} 
+            #endregion
+            /*
+             load each Customer's CustomerAccount rows 
+             and the Account behind each. Print a tidy 
+             formatted list.  
+             
+             
+             
+             */
+
+            #region List All Customers
+            var results = db.Customers.Include(c => c.CustomerAccounts).ThenInclude(ca => ca.Account).ThenInclude(a => a.Branch).ToList();
+
+            foreach (var customer in results)
             {
-                Console.Write("Customer ID : ");
-                if (int.TryParse(Console.ReadLine(), out int id))
+                Console.WriteLine($"#{customer.Id}  {customer.FullName} ({customer.CustomerType})");
+
+                if (!customer.CustomerAccounts.Any())
+                    Console.WriteLine("NO Accounts Found");
+                else
                 {
-                    if (db.Customers.Any(c => c.Id == id))
+                    foreach (var item in customer.CustomerAccounts)
                     {
-                        cusId = id;
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Enter a Valid Customer ID ");
+                        Console.WriteLine($"                 ({item.Account.Branch.Code}) {item.Account.AccountType}  Balance : {item.Account.CurrentBalance}  {item.OwnershipType} {item.AccountStatus} {item.Account.Branch.Name}");
                     }
                 }
-            }
-
-
-            var verfication = db.CustomerAccounts.Include(cs => cs.Account)
-                                                              .Where(cs => cs.CustomerId == cusId && cs.Account.AccountNumber == accNumber)
-                                                              .FirstOrDefault();
-
-            if (verfication != null)
-            {
-                db.CustomerAccounts.Remove(verfication);
-                db.SaveChanges();
-                Console.WriteLine("Ownership link deleted");
-                Console.WriteLine($"That was the last owner - Account {accNumber} was also removed");
             } 
             #endregion
+
+
+
+
 
         }
     }
