@@ -12,7 +12,7 @@ public class CustomerAccount
     public Account Account { get; set; }
     public OwnershipRole OwnershipType { get; set; }
     public DateTime OwnershipStartDate { get; set; }
-    public AccountStatus AccountStatus { get; set; }
+    public AccountStatus AccountStatus { get; set; } = AccountStatus.Active;
 
 
 }

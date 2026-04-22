@@ -78,5 +78,7 @@ public class BankDbContext : DbContext
                     .Property(m => m.HireDate)
                     .HasDefaultValueSql("GETDATE()");
 
+        
+
     }
 }

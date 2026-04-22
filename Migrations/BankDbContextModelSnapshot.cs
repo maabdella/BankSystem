@@ -56,7 +56,7 @@ namespace BankSystem.Migrations
 
                     b.HasIndex("BranchId");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Accounts", (string)null);
                 });
 
             modelBuilder.Entity("BankSystem.Models.Branch", b =>
@@ -84,7 +84,7 @@ namespace BankSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Branches");
+                    b.ToTable("Branches", (string)null);
                 });
 
             modelBuilder.Entity("BankSystem.Models.Customer", b =>
@@ -124,7 +124,7 @@ namespace BankSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("BankSystem.Models.CustomerAccount", b =>
@@ -152,7 +152,7 @@ namespace BankSystem.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CustomerAccounts");
+                    b.ToTable("CustomerAccounts", (string)null);
                 });
 
             modelBuilder.Entity("BankSystem.Models.Manager", b =>
@@ -188,7 +188,7 @@ namespace BankSystem.Migrations
                     b.HasIndex("BranchId")
                         .IsUnique();
 
-                    b.ToTable("Managers");
+                    b.ToTable("Managers", (string)null);
                 });
 
             modelBuilder.Entity("BankSystem.Models.Transaction", b =>
@@ -224,7 +224,7 @@ namespace BankSystem.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Transactions", (string)null);
                 });
 
             modelBuilder.Entity("BankSystem.Models.Account", b =>

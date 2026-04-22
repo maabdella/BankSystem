@@ -1,4 +1,5 @@
 ﻿using BankSystem.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -105,7 +106,7 @@ namespace BankSystem
             //    Console.WriteLine("Phone number must be at least 10 digits.");
             //}
 
-          
+
             //string address;
             //while (true)
             //{
@@ -166,7 +167,128 @@ namespace BankSystem
              
              */
             #region open new Account 
-            
+
+            //string accNumber;
+            //while (true)
+            //{
+            //    Console.Write("Account Number : ");
+            //    accNumber = Console.ReadLine();
+            //    if (!string.IsNullOrWhiteSpace(accNumber) && accNumber.Length == 16)
+            //        break;
+            //    Console.WriteLine("Account Number Must be 16");
+            //}
+
+
+            //int accType;
+            //while (true)
+            //{
+            //    Console.WriteLine("Account Type : ");
+            //    Console.WriteLine("  1) Savings");
+            //    Console.WriteLine("  2) Current ");
+            //    Console.WriteLine("  2) Business ");
+            //    Console.Write("    Choice : ");
+
+            //    if (int.TryParse(Console.ReadLine(), out int t) && t == 1 || t == 2 || t == 3)
+            //    {
+            //        accType = t;
+            //        break;
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Enter 1 Or 2 Or 3");
+            //    }
+            //}
+
+
+            //Branch branch;
+            //while (true)
+            //{
+
+            //    Console.Write("Branch Code : ");
+            //    if (int.TryParse(Console.ReadLine(), out int code))
+            //    {
+
+            //        branch = db.Branches.FirstOrDefault(b => b.Code == code);
+            //        if (branch == null)
+            //        {
+            //            Console.WriteLine("Enter a Valid Branch Code ");
+
+            //        }
+            //        else
+            //        {
+            //            break;
+            //        }
+            //    }
+            //}
+
+
+            //int cusId;
+            //while (true)
+            //{
+            //    Console.Write("Customer ID : ");
+            //    if (int.TryParse(Console.ReadLine(), out int id))
+            //    {
+            //        if (db.Customers.Any(c => c.Id == id))
+            //        {
+            //            cusId = id;
+            //            break;
+            //        }
+            //        else
+            //        {
+            //            Console.WriteLine("Enter a Valid Customer ID ");
+            //        }
+            //    }
+            //}
+
+
+            //int Orole;
+            //while (true)
+            //{
+            //    Console.WriteLine("OwnerShip Role : ");
+            //    Console.WriteLine("  1) Primary");
+            //    Console.WriteLine("  2) Coholder ");
+            //    Console.WriteLine("  2) Business ");
+            //    Console.Write("    Choice : ");
+
+            //    if (int.TryParse(Console.ReadLine(), out int role) && role == 1 || role == 2)
+            //    {
+            //        Orole = role;
+            //        break;
+            //    }
+            //    else { Console.WriteLine("Enter a Valid Role ..  "); }
+            //}
+
+
+            //var newAccount = new Account()
+            //{
+            //    AccountNumber = accNumber,
+            //    AccountType = (AccountType)accType,
+
+            //    BranchId = branch.Id,
+            //    CustomerAccounts = new List<CustomerAccount>() { new CustomerAccount() { CustomerId = cusId, OwnershipType = (OwnershipRole)Orole } }
+
+            //};
+
+
+
+            //Console.WriteLine($"Validating BranchCode #{branch.Code} and CustomerId #{cusId}");
+
+            //Console.WriteLine($"Account #{accNumber} Created and linked to Customer #{cusId} as {Orole} Owner");
+
+
+
+            //db.Accounts.Add(newAccount);
+            //db.SaveChanges();
+
+            #endregion
+            /*
+             Prompt for account number + customer Id, 
+                then toggle AccountStatus  
+             */
+
+
+
+            #region Update Account Status
             string accNumber;
             while (true)
             {
@@ -175,46 +297,6 @@ namespace BankSystem
                 if (!string.IsNullOrWhiteSpace(accNumber) && accNumber.Length == 16)
                     break;
                 Console.WriteLine("Account Number Must be 16");
-            }
-
-
-            int accType; 
-            while (true)
-            {
-                Console.WriteLine("Account Type : ");
-                Console.WriteLine("  1) Savings");
-                Console.WriteLine("  2) Current ");
-                Console.WriteLine("  2) Business ");
-                Console.Write("    Choice : ");
-
-                if (int.TryParse(Console.ReadLine(), out int t) && t == 1 || t == 2 || t == 3)
-                {
-                    accType = t;
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Enter 1 Or 2 Or 3");
-                }
-            }
-
-            int branchCode;
-            while (true) 
-            {
-
-                Console.Write("Branch Code : ");
-                if (int.TryParse(Console.ReadLine(), out int code))
-                {
-                    if (db.Branches.Any(b => b.Code == code))
-                    {
-                        branchCode = code;
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Enter a Valid Branch Code ");
-                    }
-                }
             }
 
             int cusId;
@@ -235,51 +317,25 @@ namespace BankSystem
                 }
             }
 
+            var verfication = db.CustomerAccounts.Include(cs => cs.Account)
+                                                              .Where(cs => cs.CustomerId == cusId && cs.Account.AccountNumber == accNumber)
+                                                              .FirstOrDefault();
 
-            int Orole;
-            while (true)
+
+            if (verfication != null)
             {
-                Console.WriteLine("OwnerShip Role : ");
-                Console.WriteLine("  1) Primary");
-                Console.WriteLine("  2) Coholder ");
-                Console.WriteLine("  2) Business ");
-                Console.Write("    Choice : ");
+                Console.WriteLine("New Status :  ");
 
-                if (int.TryParse(Console.ReadLine(), out int role) && role == 1 || role == 2 )
-                {
-                    Orole=role;
-                    break; 
-                }
-                else { Console.WriteLine("Enter a Valid Role ..  "); }
-            }
+                Console.WriteLine("  1) Active ");
+                Console.WriteLine("  2) Closed ");
+                Console.Write("   Choice  : ");
 
+                int newState = int.Parse(Console.ReadLine());
+                verfication.AccountStatus = (AccountStatus)newState;
+                Console.WriteLine($"Status Udated to be {(AccountStatus)newState}");
 
-            var newAccount = new Account()
-            {
-                AccountNumber = accNumber,
-                AccountType = (AccountType)accType,
-                Branch = new Branch() { Code = branchCode },
-                CustomerAccounts = new List<CustomerAccount>() { new CustomerAccount() { CustomerId = cusId, OwnershipType = (OwnershipRole)Orole } }
-
-            };
-
-
-
-            Console.WriteLine($"Validating BranchCode #{branchCode} and CustomerId #{cusId}");
-
-            Console.WriteLine($"Account #{accNumber} Created and linked to Customer #{cusId} as {Orole} Owner");
-
-
-
-
-            db.Accounts.Add(newAccount);
-            db.SaveChanges();
-
+            } 
             #endregion
-
-
-
-
 
 
 
