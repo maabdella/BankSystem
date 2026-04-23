@@ -2,7 +2,7 @@
 
 ### EF Core Code-First Data Layer Implementation
 
-This project is a comprehensive **Data Access Layer** for a National Bank Management System, built as part of the **ASP.NET Course**. The system is designed to track bank branches, managers, customers (Individuals & Businesses), accounts (including joint accounts), and all financial transactions. [cite: 5, 6]
+This project is a comprehensive **Data Access Layer** for a National Bank Management System, built as part of the **ASP.NET Course**. The system is designed to track bank branches, managers, customers (Individuals & Businesses), accounts (including joint accounts), and all financial transactions.
 
 ##  Project Objectives
 
