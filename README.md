@@ -1,4 +1,4 @@
-# National Bank Management System 🏦
+# Bank Management System 🏦
 
 ### EF Core Code-First Data Layer Implementation
 
